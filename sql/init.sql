@@ -13,7 +13,7 @@ ALTER TABLE
 CREATE TABLE `score_board`(
     `student_id` BIGINT UNSIGNED NOT NULL,
     `course_id` BIGINT NOT NULL,
-    `score` DOUBLE(8, 2) NOT NULL
+    `score` DOUBLE(8, 2)
 );
 ALTER TABLE
     `score_board` ADD PRIMARY KEY(`student_id`, `course_id`);

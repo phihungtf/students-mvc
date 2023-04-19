@@ -83,12 +83,12 @@ pageEncoding="ISO-8859-1" %>
 		<nav class="navbar navbar-inverse" style="border-radius: 0px">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="student">Student Management</a>
+					<a class="navbar-brand" href="./">Student Management</a>
 				</div>
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="student">Student</a></li>
-					<li><a href="course">Course</a></li>
-					<li><a href="score">Score</a></li>
+					<li class="active"><a href="./student">Student</a></li>
+					<li><a href="./course">Course</a></li>
+					<li><a href="./score">Score</a></li>
 				</ul>
 			</div>
 		</nav>

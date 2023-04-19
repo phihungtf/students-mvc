@@ -21,14 +21,6 @@ public class StudentControllerServlet extends HttpServlet {
 
     @Resource(name = "jdbc/student-management")
     private DataSource dataSource;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public StudentControllerServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
     
     @Override
     public void init() throws ServletException {

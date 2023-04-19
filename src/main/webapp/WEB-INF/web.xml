@@ -40,4 +40,14 @@
     <servlet-name>ScoreControllerServlet</servlet-name>
     <url-pattern>/score</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CourseDetailControllerServlet</display-name>
+    <servlet-name>CourseDetailControllerServlet</servlet-name>
+    <servlet-class>tech.phihungtf.studentsmvc.CourseDetailControllerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CourseDetailControllerServlet</servlet-name>
+    <url-pattern>/course/*</url-pattern>
+  </servlet-mapping>
 </web-app>
