@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.annotation.Resource;
 import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -170,9 +171,12 @@ public class CourseControllerServlet extends HttpServlet {
 		// read course id from form data
 		String theCourseId = request.getParameter("courseId");
 
-		// delete course from database
-		studentDBUtil.deleteCourse(theCourseId);
-
+		try {
+			// delete course from database
+			studentDBUtil.deleteCourse(theCourseId);
+		} catch (SQLIntegrityConstraintViolationException e) {
+			request.setAttribute("ERROR", "The course has students, please remove all students of the course before deleting.");		
+		}
 		// send back to main page (the course list)
 		listCourses(request, response);
 	}

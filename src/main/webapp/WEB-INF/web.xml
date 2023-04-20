@@ -32,13 +32,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>ScoreControllerServlet</display-name>
-    <servlet-name>ScoreControllerServlet</servlet-name>
-    <servlet-class>tech.phihungtf.studentsmvc.ScoreControllerServlet</servlet-class>
+    <display-name>StudentDetailControllerServlet</display-name>
+    <servlet-name>StudentDetailControllerServlet</servlet-name>
+    <servlet-class>tech.phihungtf.studentsmvc.StudentDetailControllerServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ScoreControllerServlet</servlet-name>
-    <url-pattern>/score</url-pattern>
+    <servlet-name>StudentDetailControllerServlet</servlet-name>
+    <url-pattern>/student/*</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

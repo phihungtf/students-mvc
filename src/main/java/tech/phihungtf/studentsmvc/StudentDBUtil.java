@@ -62,6 +62,49 @@ public class StudentDBUtil {
         }
     }
 
+	public Student getStudent(int id) throws Exception {
+		Student student = null;
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+
+		try {
+			// get connection to database
+			myConn = dataSource.getConnection();
+
+			// create sql to delete student
+			String sql = "select * from students where id=?";
+
+			// prepare statement
+			myStmt = myConn.prepareStatement(sql);
+
+			// set params
+			myStmt.setInt(1, id);
+
+			// execute sql statement
+			myRs = myStmt.executeQuery();
+
+			// retrieve data from result set row
+			if (myRs.next()) {
+				String name = myRs.getString("name");
+				int grade = myRs.getInt("grade");
+				Date birthday = myRs.getDate("birthday");
+				String notes = myRs.getString("notes");
+
+				// create new student object
+				student = new Student(id, name, grade, birthday, notes);
+			} else {
+				throw new Exception("Could not find student id: " + id);
+			}
+
+			return student;
+		} finally {
+			// clean up JDBC code
+			close(myConn, myStmt, myRs);
+		}
+	}
+
 	public void addStudent(Student theStudent) throws Exception {
 
 		Connection myConn = null;
@@ -299,7 +342,7 @@ public class StudentDBUtil {
 			myStmt.setInt(5, theCourse.getId());
 			
 			// execute SQL statement
-			myStmt.executeQuery();
+			myStmt.execute();
 		}
 		finally {
 			// clean up JDBC objects
@@ -523,6 +566,97 @@ public class StudentDBUtil {
 			// clean up JDBC code
 			close(myConn, myStmt, null);
 		}	
+	}
+
+	public List<Score> getScoresByStudentId(int studentId, int year) throws Exception {
+		List<Score> scores = new ArrayList<>();
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+
+		try {
+			// get a connection
+			myConn = dataSource.getConnection();
+
+			// create sql statement
+			String sql = "select * from score_board "
+					+ "join courses on score_board.course_id = courses.id "
+					+ "where score_board.student_id = ? "
+					+ (year == -1 ? "" : "and year = ? ");
+
+			myStmt = myConn.prepareStatement(sql);
+
+			// set params
+			myStmt.setInt(1, studentId);
+			if (year != -1) {
+				myStmt.setInt(2, year);
+			}
+			
+			// execute query
+			myRs = myStmt.executeQuery();
+
+			// process result set
+			while (myRs.next()) {
+				// retrieve data from result set row
+				int courseId = myRs.getInt("course_id");
+				String courseName = myRs.getString("name");
+				Float score = myRs.getFloat("score");
+				if (myRs.wasNull()) {
+					score = null;
+				}
+				// create new score object
+				Score tempScore = new Score(-1, courseId, null, courseName, score);
+
+				// add it to the list of scores
+				scores.add(tempScore);
+			}
+
+			return scores;
+		} finally {
+			// close JDBC objects
+			close(myConn, myStmt, myRs);
+		}
+	}
+	
+	public List<Integer> getYearsByStudentId(int studentId) throws Exception {
+		List<Integer> years = new ArrayList<>();
+
+		Connection myConn = null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+
+		try {
+			// get a connection
+			myConn = dataSource.getConnection();
+
+			// create sql statement
+			String sql = "select distinct courses.year from score_board "
+					+ "join courses on score_board.course_id = courses.id "
+					+ "where score_board.student_id = ? ";
+
+			myStmt = myConn.prepareStatement(sql);
+
+			// set params
+			myStmt.setInt(1, studentId);
+			
+			// execute query
+			myRs = myStmt.executeQuery();
+
+			// process result set
+			while (myRs.next()) {
+				// retrieve data from result set row
+				Integer year = myRs.getInt("year");
+
+				// add it to the list of years
+				years.add(year);
+			}
+
+			return years;
+		} finally {
+			// close JDBC objects
+			close(myConn, myStmt, myRs);
+		}
 	}
 
     private void close(Connection myConn, Statement myStmt, ResultSet myRs) {

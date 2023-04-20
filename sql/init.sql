@@ -12,7 +12,7 @@ ALTER TABLE
 
 CREATE TABLE `score_board`(
     `student_id` BIGINT UNSIGNED NOT NULL,
-    `course_id` BIGINT NOT NULL,
+    `course_id` BIGINT UNSIGNED NOT NULL,
     `score` DOUBLE(8, 2)
 );
 ALTER TABLE

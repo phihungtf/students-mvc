@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
 /**
  * Servlet implementation class StudentControllerServlet
  */
@@ -174,8 +175,13 @@ public class StudentControllerServlet extends HttpServlet {
 		// read student id from form data
 		String theStudentId = request.getParameter("studentId");
 
-		// delete student from database
-		studentDBUtil.deleteStudent(theStudentId);
+		try {
+			// delete student from database
+			studentDBUtil.deleteStudent(theStudentId);
+		} catch (SQLIntegrityConstraintViolationException e) {
+			// if student has a course, so the student can't be deleted
+			request.setAttribute("ERROR", "The student has courses, please remove all courses of the student before deleting.");		
+		}
 
 		// send back to main page (the student list)
 		listStudents(request, response);

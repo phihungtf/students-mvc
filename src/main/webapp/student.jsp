@@ -88,7 +88,6 @@ pageEncoding="ISO-8859-1" %>
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="./student">Student</a></li>
 					<li><a href="./course">Course</a></li>
-					<li><a href="./score">Score</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -107,7 +106,19 @@ pageEncoding="ISO-8859-1" %>
 					</button>
 				</div>
 			</c:if>
-
+			<c:if test="${not empty ERROR}">
+				<div class="alert alert-danger" id="error" role="error">
+					<strong>ERROR: </strong> ${ERROR}
+					<button
+						type="button"
+						class="close"
+						data-dismiss="alert"
+						aria-label="Close"
+					>
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</c:if>
 			<table class="table">
 				<thead>
 					<tr>
@@ -116,6 +127,7 @@ pageEncoding="ISO-8859-1" %>
 						<th scope="col">Grade</th>
 						<th scope="col">Birthday</th>
 						<th scope="col">Notes</th>
+						<th scope="col">Details</th>
 						<th scope="col">Edit</th>
 						<th scope="col">Delete</th>
 					</tr>
@@ -128,6 +140,11 @@ pageEncoding="ISO-8859-1" %>
 							<td>${tempStudent.grade}</td>
 							<td>${tempStudent.birthday}</td>
 							<td>${tempStudent.notes}</td>
+							<td>
+								<a class="btn btn-primary" href="./student/${tempStudent.id}"
+									>Details</a
+								>
+							</td>
 							<td>
 								<button
 									type="button"

@@ -87,7 +87,6 @@ pageEncoding="ISO-8859-1" %>
 				<ul class="nav navbar-nav">
 					<li><a href="./student">Student</a></li>
 					<li class="active"><a href="./course">Course</a></li>
-					<li><a href="./score">Score</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -107,6 +106,19 @@ pageEncoding="ISO-8859-1" %>
 				</div>
 			</c:if>
 
+			<c:if test="${not empty ERROR}">
+				<div class="alert alert-danger" id="error" role="error">
+					<strong>ERROR: </strong> ${ERROR}
+					<button
+						type="button"
+						class="close"
+						data-dismiss="alert"
+						aria-label="Close"
+					>
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</c:if>
 			<table class="table">
 				<thead>
 					<tr>
@@ -129,7 +141,7 @@ pageEncoding="ISO-8859-1" %>
 							<td>${tempCourse.year}</td>
 							<td>${tempCourse.notes}</td>
 							<td>
-								<a class="btn btn-primary" href="course/${tempCourse.id}"
+								<a class="btn btn-primary" href="./course/${tempCourse.id}"
 									>Details</a
 								>
 							</td>

@@ -123,7 +123,6 @@ pageEncoding="ISO-8859-1" %>
 				<ul class="nav navbar-nav">
 					<li><a href="../student">Student</a></li>
 					<li class="active"><a href="../course">Course</a></li>
-					<li><a href="../score">Score</a></li>
 				</ul>
 			</div>
 		</nav>
